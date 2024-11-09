@@ -14,4 +14,5 @@ trapezoidal rule to parallel using OpenMP. Use integrate.c as your starter code.
 Task 3: Benchmark the time it took for your sequential and OpenMP versions for both 
 tasks 1 and 2 using the table below: 
 						
-![image](https://github.com/user-attachments/assets/d1f53a5a-cb30-48a3-9860-8a1cb696d2d0)
+![image](https://github.com/user-attachments/assets/aea6ae4b-87b2-41ff-8165-d29e1cc757fd)
+
