@@ -8,6 +8,15 @@
 //#define N 30 
 #define N 1000 
 
+//Create custom ThreadData object
+typedef struct {
+    int start_row;
+    int end_row;
+    int **A;
+    int **B;
+    int **C;
+} ThreadData;
+
 void displayMatrix(int** matrix) {
     for (int i = 0; i < N; ++i) {
         for (int j = 0; j < N; ++j) {
@@ -17,12 +26,16 @@ void displayMatrix(int** matrix) {
     }
 }
 
-void matrixMultiply(int** A, int** B, int** C) {
-    #pragma omp parallel for schedule(guided) collapse(2) //parallelize two outer loops using guided scheduling.
-    //#pragma omp parallel for schedule(dynamic) collapse(2) //parallelize two outer loops using dynamic scheduling.
-    //#pragma omp parallel for schedule(static) collapse(2) //parallelize two outer loops using static scheduling.
+void* matrixMultiply(void* arg) {
+    ThreadData* data = (ThreadData*)arg;
+    int start_row = data->start_row;
+    int end_row = data->end_row;
+    int **A = data->A;
+    int **B = data->B;
+    int **C = data->C;
+
    
-   for (int x = 0; x < N; ++x){ //iterate through row x in A and C
+   for (int x = start_row; x < end_row; ++x){ //iterate through row x in A and C
     for (int i = 0; i < N; ++i) { 
          int tempC = 0; //temp variable to hold value for C
         for (int j = 0; j < N; ++j) { 
@@ -30,8 +43,8 @@ void matrixMultiply(int** A, int** B, int** C) {
         }
         C [i][x] = tempC; // fill in element in matrix C  
         tempC = 0;
-        
+        }
     }
-    
-   }
+    pthread_exit(NULL);
+   
 }
