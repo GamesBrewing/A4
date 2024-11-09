@@ -14,7 +14,9 @@ void displayMatrix(int matrix[N][N]) {
 }
 
 void matrixMultiply(int A[N][N], int B[N][N], int C[N][N]) {
-    #pragma omp parallel for schedule(static) collapse(2) //parallelize two outer loops using static scheduling.
+    #pragma omp parallel for schedule(guided) collapse(2) //parallelize two outer loops using guided scheduling.
+    //#pragma omp parallel for schedule(dynamic) collapse(2) //parallelize two outer loops using dynamic scheduling.
+    //#pragma omp parallel for schedule(dynamic) collapse(2) //parallelize two outer loops using static scheduling.
    
    for (int x = 0; x < N; ++x){ //iterate through row x in A and C
     for (int i = 0; i < N; ++i) { 
