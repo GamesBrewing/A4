@@ -1,12 +1,14 @@
 #include <stdio.h>
 #include <omp.h>
+#include <stdlib.h>
 
-#define N 10 // Size of the matrices
-//#define N 20 // Size of the matrices
-//#define N 30 // Size of the matrices
+// Size of the matrices
+//#define N 10 
+//#define N 20 
+//#define N 30 
+#define N 1000 
 
-
-void displayMatrix(int matrix[N][N]) {
+void displayMatrix(int** matrix) {
     for (int i = 0; i < N; ++i) {
         for (int j = 0; j < N; ++j) {
             printf("%d ", matrix[i][j]);
@@ -15,7 +17,7 @@ void displayMatrix(int matrix[N][N]) {
     }
 }
 
-void matrixMultiply(int A[N][N], int B[N][N], int C[N][N]) {
+void matrixMultiply(int** A, int** B, int** C) {
     #pragma omp parallel for schedule(guided) collapse(2) //parallelize two outer loops using guided scheduling.
     //#pragma omp parallel for schedule(dynamic) collapse(2) //parallelize two outer loops using dynamic scheduling.
     //#pragma omp parallel for schedule(static) collapse(2) //parallelize two outer loops using static scheduling.

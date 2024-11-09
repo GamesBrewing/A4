@@ -1,14 +1,27 @@
 #include "matrixMul.h"
 
-
+// Need to allocate the memory for the matrix when compiling, otherwise I get a segmentation fault. I think it is caused by stack overload.
+int ** allocateMatrix ( int n){  
+    int** matrix = (int**)malloc(n* sizeof(int*));
+    for (int i =0; i < n; ++i){
+        matrix[i] = (int*)malloc(n * sizeof(int));
+    }
+    return matrix;
+}
 
 int main() {
 
-  
-    // Static allocation of matrices
-    int A[N][N];
-    int B[N][N];
-    int C[N][N];
+  // Set the number of threads
+  //omp_set_num_threads(1);
+  //omp_set_num_threads(2);
+  //omp_set_num_threads(5);
+  //omp_set_num_threads(7);
+  omp_set_num_threads(9);
+
+  // Allocation of matrices
+    int** A = allocateMatrix(N);
+    int** B = allocateMatrix(N);
+    int** C = allocateMatrix(N);
 
     printf("Matrices allocated successfully.\n");
 
